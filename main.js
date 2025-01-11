@@ -66,8 +66,8 @@ async function main() {
 }
 
 schedule.scheduleJob({
-  hour: 14,
-  minute: 25,
+  hour: 10,
+  minute: 0,
   tz: 'Europe/Moscow',
 }, async () => {
   await main()
