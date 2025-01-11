@@ -9,6 +9,7 @@ module.exports = async (name, proxy) => {
   try {
     const response = await axios('https://market.csgo.com/api/graphql', {
       method: 'POST',
+      timeout: 15000,
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",

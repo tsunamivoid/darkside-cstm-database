@@ -6,6 +6,7 @@ const getHumanDateNow = require('./getHumanDateNow');
 const sendInfoAboutCreatedBaseToTg = require('./sendInfoAboutCreatedBaseToTg');
 const connectToDb = require('./connectToDb');
 const updateDataInDb = require('./updateDataInDb');
+const getItemLastOfferPrice = require('./getItemLastOfferPrice');
 
 module.exports = {
   getItemsPageData,
@@ -16,4 +17,5 @@ module.exports = {
   sendInfoAboutCreatedBaseToTg,
   connectToDb,
   updateDataInDb,
+  getItemLastOfferPrice,
 }
