@@ -111,12 +111,12 @@ async function main() {
   await sendInfoAboutCreatedBaseToTg(process.env.TG_API_TOKEN, process.env.TG_CHAT_ID, goodItems.length, getHumanDateNow())
 }
 
-// schedule.scheduleJob({
-//   hour: 10,
-//   minute: 0,
-//   tz: 'Europe/Moscow',
-// }, async () => {
-//   await main()
-// })
+schedule.scheduleJob({
+  hour: 6,
+  minute: 0,
+  tz: 'Europe/Moscow',
+}, async () => {
+  await main()
+})
 
-main()
+// main()
