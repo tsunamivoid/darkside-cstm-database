@@ -1,21 +1,12 @@
-const getItemsPageData = require('./getItemsPageData');
+const getAllItems = require('./getAllItems');
 const getItemSalesHistory = require('./getItemSalesHistory');
-const sleep = require('./sleep');
-const sortItems = require('./sortItems');
-const getHumanDateNow = require('./getHumanDateNow');
-const sendInfoAboutCreatedBaseToTg = require('./sendInfoAboutCreatedBaseToTg');
-const connectToDb = require('./connectToDb');
-const updateDataInDb = require('./updateDataInDb');
-const getItemLastOfferPrice = require('./getItemLastOfferPrice');
+const getAvgPrice = require('./getAvgPrice');
+const sortItem = require('./sortItem');
+
 
 module.exports = {
-  getItemsPageData,
+  getAllItems,
   getItemSalesHistory,
-  sleep,
-  sortItems,
-  getHumanDateNow,
-  sendInfoAboutCreatedBaseToTg,
-  connectToDb,
-  updateDataInDb,
-  getItemLastOfferPrice,
+  getAvgPrice,
+  sortItem,
 }

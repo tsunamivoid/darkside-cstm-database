@@ -1,7 +1,7 @@
 const axios = require('axios');
 const { HttpsProxyAgent } = require('https-proxy-agent');
 
-module.exports = async (name, proxy) => {
+module.exports = async (hashName, proxy) => {
   const proxyString = proxy.split(':')
   const agent = new HttpsProxyAgent(
     `http://${proxyString[2]}:${proxyString[3]}@${proxyString[0]}:${proxyString[1]}`
@@ -9,18 +9,17 @@ module.exports = async (name, proxy) => {
   try {
     const response = await axios('https://market.csgo.com/api/graphql', {
       method: 'POST',
-      timeout: 15000,
+      timeout: 10000,
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "Referer": "https://market.csgo.com/en/?priceMin=1",
+        "Referer": "https://market.csgo.com/en/?priceMin=1.5",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
       },
       data: {
         operationName: 'history',
         variables: {
-          market_hash_name: name,
-          phase: null,
+          market_hash_name: hashName,
         },
         query: `
           query history($market_hash_name: String!, $phase: String) {
@@ -36,7 +35,7 @@ module.exports = async (name, proxy) => {
       responseType: 'json',
     })
     return [true, response.data]
-  } catch (e) {
-    return [false, e.message]
+  } catch {
+    return [false, null]
   }
 }
