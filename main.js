@@ -72,7 +72,7 @@ async function main() {
       }
     }
   }
-  await fs.writeFile('new.json', JSON.stringify(rsBase, null, 2))
+  await fs.writeFile('liquidity.json', JSON.stringify(rsBase, null, 2))
 }
 
 
