@@ -50,18 +50,22 @@ async function main() {
       const priceResult = await getAvgPrice(items[counter]['item_sales_history'])
       if (!isNaN(priceResult[0])) {
         const actualPriceResult = await getActualPrice(items[counter]['item_name'], PROXYES[proxyesCounter])
-        if (actualPriceResult[1]['data']['viewItem']) {
-          const actualPrice = actualPriceResult[1]['data']['viewItem']['price']
-          if (actualPrice < priceResult[0]) {
-            items[counter]['item_price'] = actualPrice
+        try {
+          if (actualPriceResult[1]['data']['viewItem']) {
+            const actualPrice = actualPriceResult[1]['data']['viewItem']['price']
+            if (actualPrice < priceResult[0]) {
+              items[counter]['item_price'] = actualPrice
+            } else {
+              items[counter]['item_price'] = priceResult[0]
+            }
+            items[counter]['price_type'] = priceResult[1]
+            items[counter]['sales_count_week'] = priceResult[2]
+            items[counter]['sales_count_mounth'] = priceResult[3]
+            items[counter]['isItemGood'] = await sortItem(items[counter]['item_sales_history'], items[counter]['item_price'])
           } else {
-            items[counter]['item_price'] = priceResult[0]
+            console.log('Нет актуальной цены')
           }
-          items[counter]['price_type'] = priceResult[1]
-          items[counter]['sales_count_week'] = priceResult[2]
-          items[counter]['sales_count_mounth'] = priceResult[3]
-          items[counter]['isItemGood'] = await sortItem(items[counter]['item_sales_history'], items[counter]['item_price'])
-        } else {
+        } catch {
           console.log('Нет актуальной цены')
         }
       } else {
