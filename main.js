@@ -15,6 +15,8 @@ const {
   getItemSalesHistory,
   getAvgPrice,
   sortItem,
+  sendBaseToTg,
+  getActualPrice,
 } = require('./src/functions/functions');
 
 async function main() {
@@ -46,18 +48,32 @@ async function main() {
         items[counter]['item_sales_history'].push(sale)
       }
       const priceResult = await getAvgPrice(items[counter]['item_sales_history'])
-      items[counter]['item_price'] = priceResult[0]
-      items[counter]['price_type'] = priceResult[1]
-      items[counter]['sales_count_week'] = priceResult[2]
-      items[counter]['sales_count_mounth'] = priceResult[3]
-      items[counter]['isItemGood'] = await sortItem(items[counter]['item_sales_history'], items[counter]['item_price'])
+      if (!isNaN(priceResult[0])) {
+        const actualPriceResult = await getActualPrice(items[counter]['item_name'], PROXYES[proxyesCounter])
+        if (actualPriceResult[1]['data']['viewItem']) {
+          const actualPrice = actualPriceResult[1]['data']['viewItem']['price']
+          if (actualPrice < priceResult[0]) {
+            items[counter]['item_price'] = actualPrice
+          } else {
+            items[counter]['item_price'] = priceResult[0]
+          }
+          items[counter]['price_type'] = priceResult[1]
+          items[counter]['sales_count_week'] = priceResult[2]
+          items[counter]['sales_count_mounth'] = priceResult[3]
+          items[counter]['isItemGood'] = await sortItem(items[counter]['item_sales_history'], items[counter]['item_price'])
+        } else {
+          console.log('Нет актуальной цены')
+        }
+      } else {
+        console.log('NaN')
+      }
     }
     proxyesCounter += 1
     if (proxyesCounter >= PROXYES.length) {
       proxyesCounter = 0
     }
+    console.log(items[counter]['item_price'], items[counter]['item_name'], items[counter]['isItemGood'], counter)
     counter += 1
-    console.log(counter)
   }
 
   // Запись данных
@@ -66,14 +82,16 @@ async function main() {
     if (item['isItemGood']) {
       rsBase[item['item_name']] = {
         item_price: item['item_price'],
-        price_type: item['price_type'],
-        sales_count_week: item['sales_count_week'],
-        sales_count_mounth: item['sales_count_mounth'],
       }
     }
   }
-  await fs.writeFile('liquidity.json', JSON.stringify(rsBase, null, 2))
+  await fs.writeFile('liq.json', JSON.stringify(rsBase, null, 2))
+
+  // Отправка базы в ТГ-канал
+  const response = await sendBaseToTg(TG_API_TOKEN, TG_CHAT_ID, Object.keys(rsBase).length, new Date().toLocaleDateString())
+  console.log(response)
 }
+
 
 
 main()
