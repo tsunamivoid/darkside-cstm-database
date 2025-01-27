@@ -4,6 +4,7 @@ const getAvgPrice = require('./getAvgPrice');
 const sortItem = require('./sortItem');
 const sendBaseToTg = require('./sendBaseToTg');
 const getActualPrice = require('./getActualPrice');
+const sleep = require('./sleep');
 
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
   getAvgPrice,
   sortItem,
   sendBaseToTg,
-  getActualPrice
+  getActualPrice,
+  sleep,
 }

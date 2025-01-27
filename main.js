@@ -17,6 +17,7 @@ const {
   sortItem,
   sendBaseToTg,
   getActualPrice,
+  sleep,
 } = require('./src/functions/functions');
 
 async function main() {
@@ -78,6 +79,9 @@ async function main() {
     }
     console.log(items[counter]['item_price'], items[counter]['item_name'], items[counter]['isItemGood'], counter)
     counter += 1
+    if (counter > 10) {
+      break
+    }
   }
 
   // Запись данных
@@ -89,6 +93,9 @@ async function main() {
       }
     }
   }
+
+  await fs.unlink('liq.json')
+  await sleep(5000)
   await fs.writeFile('liq.json', JSON.stringify(rsBase, null, 2))
 
   // Отправка базы в ТГ-канал
