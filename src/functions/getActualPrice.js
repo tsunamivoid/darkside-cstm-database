@@ -139,8 +139,8 @@ module.exports = async (hashName, proxy) => {
           }
         `
       },
-      httpsAgent: agent,
       responseType: 'json',
+      httpsAgent: agent,
     })
     return [true, response.data]
   } catch {
