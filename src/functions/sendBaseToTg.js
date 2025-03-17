@@ -3,9 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 
-module.exports = async (botToken, botChatId, baseLen, baseDate) => {
+module.exports = async (botToken, botChatId, baseLen, baseDate, fileName) => {
   try {
-    const baseJsonPath = path.resolve(__dirname, '../../liq.json')
+    const baseJsonPath = path.resolve(__dirname, `../../${fileName}.json`)
     const form = new FormData()
     form.append('chat_id', botChatId)
     form.append('document', fs.createReadStream(baseJsonPath))

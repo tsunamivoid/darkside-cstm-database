@@ -117,9 +117,9 @@ async function main() {
   await fs.writeFile('tech.json', JSON.stringify(techBase, null, 2))
 
   // Отправка базы в ТГ-канал
-  const response = await sendBaseToTg(TG_API_TOKEN, TG_CHAT_ID, Object.keys(rsBase).length, new Date().toLocaleDateString())
+  const response = await sendBaseToTg(TG_API_TOKEN, TG_CHAT_ID, Object.keys(rsBase).length, new Date().toLocaleDateString(), 'liq')
   console.log(response)
-  const responsetech = await sendBaseToTg(TG_API_TOKEN, TG_CHAT_ID, Object.keys(techBase).length, new Date().toLocaleDateString())
+  const responsetech = await sendBaseToTg(TG_API_TOKEN, TG_CHAT_ID, Object.keys(techBase).length, new Date().toLocaleDateString(), 'tech')
   console.log(responsetech)
 }
 
