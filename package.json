@@ -2,8 +2,9 @@
   "name": "darkside-cstm-database",
   "version": "1.0.0",
   "main": "main.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "main": "node main.js"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,7 @@
   "description": "",
   "dependencies": {
     "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
-    "form-data": "^4.0.1",
-    "https-proxy-agent": "^7.0.6",
-    "node-schedule": "^2.1.1",
-    "pg": "^8.13.1"
+    "cli-progress": "^3.12.0",
+    "https-proxy-agent": "^7.0.6"
   }
 }

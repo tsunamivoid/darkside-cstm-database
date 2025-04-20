@@ -1,4 +1,4 @@
-module.exports = async (itemSales) => {
+const getAvgMounthOrWeeklyPrice = async (itemSales) => {
   const oneWeekInMilliseconds = 7 * 24 * 60 * 60 * 1000
   const oneMounthInMilliseconds = 30 * 24 * 60 * 60 * 1000
   const currentTime = Date.now()
@@ -39,12 +39,15 @@ module.exports = async (itemSales) => {
   }
 
   if (mounthDiff > 10 && priceMounth < priceWeek) {
-    return [priceMounth, 'mounthAvg', weekSalesCount, mounthSalesCount]
+    return priceMounth
   }
 
   if (priceMounth < priceWeek) {
-    return [priceMounth, 'mounthAvg', weekSalesCount, mounthSalesCount]
+    return priceMounth
   }
 
-  return [priceWeek, 'weekAvg', weekSalesCount, mounthSalesCount]
+  return priceWeek
 }
+
+
+export default getAvgMounthOrWeeklyPrice

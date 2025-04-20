@@ -1,15 +1,16 @@
-const axios = require('axios');
-const { HttpsProxyAgent } = require('https-proxy-agent');
+import axios from 'axios';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+import appendDataToLogFile from '../utils/appendDataToLogFile.js';
 
-module.exports = async (hashName, proxy) => {
-  const proxyString = proxy.split(':')
-  const agent = new HttpsProxyAgent(
-    `http://${proxyString[2]}:${proxyString[3]}@${proxyString[0]}:${proxyString[1]}`
-  )
+const getItemSalesHistory = async (hashName, proxy, logFilePath) => {
   try {
+    const proxyString = proxy.split(':')
+    const agent = new HttpsProxyAgent(
+      `http://${proxyString[2]}:${proxyString[3]}@${proxyString[0]}:${proxyString[1]}`
+    )
     const response = await axios('https://market.csgo.com/api/graphql', {
       method: 'POST',
-      timeout: 10000,
+      timeout: 30000,
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
@@ -31,11 +32,15 @@ module.exports = async (hashName, proxy) => {
           }
         `
       },
-      httpsAgent: agent,
+      //httpsAgent: agent,
       responseType: 'json',
     })
-    return [true, response.data]
-  } catch {
-    return [false, null]
+    return {success: true, history: response.data['data']['history']}
+  } catch (e) {
+    await appendDataToLogFile(logFilePath, 'getItemSalesHistory', e.message)
+    return {success: false, history: []}
   }
 }
+
+
+export default getItemSalesHistory
