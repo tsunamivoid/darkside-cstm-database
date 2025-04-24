@@ -140,7 +140,7 @@ const getActualPrice = async (hashName, proxy, logFilePath) => {
           }
         `
       },
-      //httpsAgent: agent,
+      httpsAgent: agent,
       responseType: 'json',
     })
     return {success: true, actualPrice: response.data['data']['viewItem']['price']}

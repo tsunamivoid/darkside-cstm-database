@@ -32,7 +32,7 @@ const getItemSalesHistory = async (hashName, proxy, logFilePath) => {
           }
         `
       },
-      //httpsAgent: agent,
+      httpsAgent: agent,
       responseType: 'json',
     })
     return {success: true, history: response.data['data']['history']}
