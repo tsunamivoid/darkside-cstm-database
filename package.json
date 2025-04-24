@@ -16,7 +16,7 @@
     "url": "https://github.com/tsunamivoid/darkside-cstm-database/issues"
   },
   "homepage": "https://github.com/tsunamivoid/darkside-cstm-database#readme",
-  "description": "",
+  "description": "Автоматизированное получение списка предметов с сервиса MarketCSGO и их последующая фильтрация",
   "dependencies": {
     "axios": "^1.7.9",
     "cli-progress": "^3.12.0",
